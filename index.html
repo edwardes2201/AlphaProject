@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1.0, viewport-fit=cover">
+    <title> ALPHA PROJECT | Topografía de Precisión</title>
+    <!-- Font Awesome Icons (gratis) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #010314;
+            color: #eef5ff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Fondo con gradiente dinámico */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 40, 80, 0.4), rgba(0, 0, 0, 0.95));
+            z-index: -2;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Header / Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFFFFF, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #6c8db0;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #ccdeff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: #00f2ff;
+            text-shadow: 0 0 5px #00f2ff;
+        }
+
+        /* Botón CTA */
+        .btn-cta {
+            background: linear-gradient(95deg, #0077ff, #00ccff);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 12px rgba(0, 150, 255, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-cta:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.7);
+            background: linear-gradient(95deg, #0088ff, #00ddff);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #00ccff;
+            padding: 10px 24px;
+            border-radius: 40px;
+            color: #00ccff;
+            font-weight: 500;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            background: #00ccff20;
+            box-shadow: 0 0 10px #00ccff;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 0 80px;
+            gap: 48px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text .badge {
+            background: #0a2a3b;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            width: fit-content;
+            margin-bottom: 24px;
+            border-left: 3px solid #00ffff;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #ffffff, #90e0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #b8d0f0;
+            margin-bottom: 32px;
+            max-width: 550px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: #00e0ff;
+        }
+
+        .hero-image {
+            flex: 1;
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 32px;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            text-align: center;
+            border: 1px solid rgba(0, 255, 200, 0.2);
+        }
+
+        /* Servicios */
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 48px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .section-title span {
+            color: #00ddff;
+            border-bottom: 3px solid #00ddff;
+            padding-bottom: 8px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background: rgba(8, 20, 40, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 32px 24px;
+            border-radius: 32px;
+            transition: 0.3s;
+            border: 1px solid rgba(0, 200, 255, 0.1);
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: #00ccff;
+            box-shadow: 0 20px 30px -15px rgba(0, 150, 255, 0.3);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #00ddff;
+            margin-bottom: 24px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        /* Video incrustado */
+        .video-showreel {
+            background: #051a2a;
+            border-radius: 40px;
+            padding: 48px 24px;
+            margin: 60px 0;
+            text-align: center;
+            border: 1px solid #00ccff40;
+        }
+
+        .video-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px -10px black;
+        }
+
+        iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
+        /* Tecnología LIDAR + Dron */
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            padding: 50px 0;
+        }
+        .tech-text {
+            flex: 1;
+        }
+        .tech-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+        .tech-list li {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #2a4c6e;
+            padding: 40px 0;
+            margin-top: 60px;
+            text-align: center;
+            color: #8aaec0;
+        }
+
+        @media (max-width: 850px) {
+            .navbar {
+                flex-direction: column;
+            }
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            .container {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<div class="container">
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <div class="logo">
+            <h1>ALPHA<span style="color:#00ccff;"> </span>PROJECT</h1>
+            <span>Topografía de precisión · Geoinformación</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Inicio</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#tecnologia">Tecnología</a>
+            <a href="#contacto">Contacto</a>
+        </div>
+        <a href="#contacto" class="btn-cta">Cotizar proyecto →</a>
+    </nav>
+
+    <!-- Hero principal -->
+    <div class="hero">
+        <div class="hero-text">
+            <div class="badge"><i class="fas fa-microchip"></i>  Escaneo LIDAR + Drones</div>
+            <h1>Geodatos con<br>precisión centimétrica</h1>
+            <p>Relevamientos aéreos, modelos 3D, nubes de puntos y gemelos digitales para minería, construcción, agricultura e infraestructura.</p>
+            <div style="display: flex; gap: 18px; flex-wrap: wrap;">
+                <a href="#contacto" class="btn-cta">Solicitar demo <i class="fas fa-arrow-right"></i></a>
+                <a href="#tecnologia" class="btn-outline">Ver plataforma</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item"><h3>±1.5cm</h3><p>Precisión vertical</p></div>
+                <div class="stat-item"><h3>500+</h3><p>Proyectos realizados</p></div>
+                <div class="stat-item"><h3>24/7</h3><p>Procesamiento ágil</p></div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <i class="fas fa-drone" style="font-size: 120px; color: #00ccff; opacity: 0.7;"></i>
+            <p style="margin-top: 20px;">Nube de puntos LIDAR | Visualización en tiempo real</p>
+            <small style="color: #8cb2d6;">Ejemplo: modelo 3D de infraestructura</small>
+        </div>
+    </div>
+
+    <!-- SERVICIOS -->
+    <div id="servicios">
+        <div class="section-title"><span>Servicios de precisión</span></div>
+        <div class="cards-grid">
+            <div class="service-card"><div class="service-icon"><i class="fas fa-mountain-city"></i></div><h3>Topografía con dron</h3><p>Levantamientos ortofoto, curvas de nivel, modelos digitales de terreno para ingeniería y minería.</p></div>
+            <div class="service-card"><div class="service-icon"><i class="fas fa-cubes"></i></div><h3>Gemelos digitales</h3><p>Modelos LIDAR 3D interactivos para monitoreo de obras y control de avance.</p></div>
+            <div class="service-card"><div class="service-icon"><i class="fas fa-chart-line"></i></div><h3>Monitoreo de taludes</h3><p>Detección de movimientos y deformaciones con alta densidad de puntos.</p></div>
+            <div class="service-card"><div class="service-icon"><i class="fas fa-water"></i></div><h3>Hidrografía y batimetría</h3><p>Relevamiento de cauces, embalses, y áreas inundables con tecnología integrada.</p></div>
+        </div>
+    </div>
+
+    <!-- Video incrustado YT / Vimeo DEMO -->
+    <div class="video-showreel" id="tecnologia">
+        <h3 style="font-size: 1.8rem;">✈️ Mira nuestro trabajo</h3>
+        <p style="margin-bottom: 30px;">Captura LIDAR + Procesamiento en nube</p>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=0" title="Demostración LIDAR" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p style="margin-top: 25px; font-size: 0.85rem;">(Video representativo - próximamente material real)</p>
+    </div>
+
+    <!-- Tecnología LIDAR + Drones -->
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; margin: 40px 0 40px; align-items: center;" id="tecnologia-detalle">
+        <div style="flex: 1;">
+            <h2 style="font-size: 2rem;">Tecnología de nivel empresarial</h2>
+            <ul class="tech-list">
+                <li><i class="fas fa-check-circle" style="color:#00ffcc;"></i> Escáner LIDAR de 1.5M pts/segundo</li>
+                <li><i class="fas fa-check-circle" style="color:#00ffcc;"></i> Dron RTK/PPK de ala fija y multirotor</li>
+                <li><i class="fas fa-check-circle" style="color:#00ffcc;"></i> Procesamiento en la nube <strong>Gemelo Digital</strong></li>
+                <li><i class="fas fa-check-circle" style="color:#00ffcc;"></i> Formatos: LAS, LAZ, PLY, 3D Tiles, PDF, CAD</li>
+            </ul>
+            <a href="#contacto" class="btn-cta" style="margin-top: 20px; display: inline-block;">Consultar integración →</a>
+        </div>
+        <div style="flex: 1; background: #071e2c; border-radius: 32px; padding: 30px; text-align: center;">
+            <i class="fas fa-chart-simple" style="font-size: 4rem; color:#00ddff;"></i>
+            <p style="margin-top: 20px;">Modelo 3D interactivo (vista previa)</p>
+            <div style="height: 2px; background: linear-gradient(90deg, #0077ff, #00ccff); width: 80%; margin: 20px auto;"></div>
+            <small>Plataforma web compatible con nubes de puntos masivas</small>
+        </div>
+    </div>
+
+    <!-- Contacto simple -->
+    <div id="contacto" style="background: rgba(0, 50, 80, 0.4); border-radius: 48px; padding: 48px 32px; margin: 70px 0 20px; text-align: center; backdrop-filter: blur(5px);">
+        <h2>¿Tu proyecto necesita precisión extrema?</h2>
+        <p style="margin: 16px auto; max-width: 500px;">Escríbenos y te asesoramos sin compromiso, con estudio de viabilidad inicial.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px;">
+            <a href="mailto:contacto@lidarydron.com" class="btn-cta"><i class="fas fa-envelope"></i> edwardes2201@gmail.com</a>
+            <a href="#" class="btn-outline"><i class="fab fa-whatsapp"></i> +51 998 879 224</a>
+        </div>
+        <div style="margin-top: 35px; display: flex; gap: 28px; justify-content: center;">
+            <i class="fab fa-linkedin-in" style="font-size: 1.4rem; cursor: pointer;"></i>
+            <i class="fab fa-instagram" style="font-size: 1.4rem; cursor: pointer;"></i>
+            <i class="fab fa-youtube" style="font-size: 1.4rem; cursor: pointer;"></i>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 ALPHA PROJECT - Topografía avanzada con tecnología aérea LIDAR.<br>Todos los derechos reservados.</p>
+    </footer>
+</div>
+</body>
+</html>
